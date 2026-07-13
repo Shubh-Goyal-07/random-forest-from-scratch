@@ -34,10 +34,36 @@ def split_dataset(features, labels, feature_index, threshold):
 # Step 3 - split_score
 def split_score(parent_labels, left_labels, right_labels):
     ll, rl, pl = len(left_labels), len(right_labels), len(parent_labels)
-    return  impurity(parent_labels) - (ll*impurity(left_labels) + rl*impurity(right_labels))
+    return  impurity(parent_labels) - (ll*impurity(left_labels) + rl*impurity(right_labels))/pl
 
-# Step 4 - best_split (not yet solved)
-# TODO: implement
+# Step 4 - best_split
+import numpy as np
+
+def best_split(features, labels, feature_indices):
+    curr_best = {
+        "feature_index": None,
+        "threshold": None,
+        "score": 0
+    }
+
+    for idx in range(features.shape[1]):
+        feat_vals = features[:, idx]
+        values = np.sort(np.unique(feat_vals))
+        thresholds = (values[:-1] + values[1:]) / 2
+        
+        for thresh in thresholds:
+            lf, ll, rf, rl = split_dataset(features, labels, idx, thresh)
+            if len(ll) == 0 or len(rl) == 0:
+                continue
+            
+            curr_score = split_score(labels, ll, rl)
+
+            if curr_score>curr_best["score"]:
+                curr_best["score"] = curr_score
+                curr_best["feature_index"] = idx
+                curr_best["threshold"] = thresh
+    
+    return curr_best
 
 # Step 5 - should_stop (not yet solved)
 # TODO: implement
