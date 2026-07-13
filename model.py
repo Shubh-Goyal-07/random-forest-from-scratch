@@ -72,8 +72,12 @@ def should_stop(labels, depth, max_depth, min_samples_split):
         return True
     return False
 
-# Step 6 - leaf_prediction (not yet solved)
-# TODO: implement
+# Step 6 - leaf_prediction
+def leaf_prediction(labels):
+    values, counts = np.unique(labels, return_counts=True)
+    mode = values[np.argmax(counts)]
+
+    return int(mode)
 
 # Step 7 - build_tree (not yet solved)
 # TODO: implement
