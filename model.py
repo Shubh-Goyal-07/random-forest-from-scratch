@@ -46,7 +46,7 @@ def best_split(features, labels, feature_indices):
         "score": 0
     }
 
-    for idx in range(features.shape[1]):
+    for idx in feature_indices:
         feat_vals = features[:, idx]
         values = np.sort(np.unique(feat_vals))
         thresholds = (values[:-1] + values[1:]) / 2
