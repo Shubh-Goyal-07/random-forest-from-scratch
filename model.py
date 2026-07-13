@@ -31,8 +31,10 @@ def split_dataset(features, labels, feature_index, threshold):
         labels[right_mask]
     )
 
-# Step 3 - split_score (not yet solved)
-# TODO: implement
+# Step 3 - split_score
+def split_score(parent_labels, left_labels, right_labels):
+    ll, rl, pl = len(left_labels), len(right_labels), len(parent_labels)
+    return  impurity(parent_labels) - (ll*impurity(left_labels) + rl*impurity(right_labels))
 
 # Step 4 - best_split (not yet solved)
 # TODO: implement
