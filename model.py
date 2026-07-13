@@ -65,8 +65,12 @@ def best_split(features, labels, feature_indices):
     
     return curr_best
 
-# Step 5 - should_stop (not yet solved)
-# TODO: implement
+# Step 5 - should_stop
+def should_stop(labels, depth, max_depth, min_samples_split):
+    """Return True if this node should become a leaf instead of splitting further."""
+    if len(labels)<min_samples_split or depth>=max_depth or len(np.unique(labels))==1:
+        return True
+    return False
 
 # Step 6 - leaf_prediction (not yet solved)
 # TODO: implement
