@@ -216,8 +216,12 @@ def train_forest(features, labels, num_trees=10, max_depth=10, min_samples_split
 
     return forest
 
-# Step 13 - combine_predictions (not yet solved)
-# TODO: implement
+# Step 13 - combine_predictions
+from scipy import stats
+
+def combine_predictions(tree_predictions):
+    result = stats.mode(tree_predictions, axis=0)
+    return result.mode
 
 # Step 14 - predict_forest (not yet solved)
 # TODO: implement
