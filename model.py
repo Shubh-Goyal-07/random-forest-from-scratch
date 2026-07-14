@@ -225,10 +225,11 @@ def combine_predictions(tree_predictions):
 
 # Step 14 - predict_forest
 def predict_forest(forest, features):
-    preds = np.empty((len(features), len(forest)))
+    preds = np.empty((len(forest), len(features)))
+
     for j, tree_info in enumerate(forest):
-        tree_feats = features[:, tree_info["feature_indices"]]
-        preds[:, j] = predict_tree(tree_info["tree"], tree_feats)
+        # tree_feats = features[:, tree_info["feature_indices"]]
+        preds[j, :] = predict_tree(tree_info["tree"], features)
         
     return combine_predictions(preds)
 
