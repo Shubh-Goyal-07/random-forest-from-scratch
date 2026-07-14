@@ -138,8 +138,15 @@ def build_tree(features,
 
     return process_node(features, labels, depth)
 
-# Step 8 - predict_example_tree (not yet solved)
-# TODO: implement
+# Step 8 - predict_example_tree
+def predict_example_tree(tree, example):
+    if tree["leaf"]:
+        return tree["prediction"]
+    else:
+        if example[tree["feature_index"]] <= tree["threshold"]:
+            return predict_example_tree(tree["left"], example)
+        else:
+            return predict_example_tree(tree["right"], example)
 
 # Step 9 - predict_tree (not yet solved)
 # TODO: implement
