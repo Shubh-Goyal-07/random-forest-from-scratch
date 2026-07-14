@@ -79,8 +79,64 @@ def leaf_prediction(labels):
 
     return int(mode)
 
-# Step 7 - build_tree (not yet solved)
-# TODO: implement
+# Step 7 - build_tree
+import numpy as np
+
+def build_tree(features,
+               labels,
+               max_depth=10,
+               min_samples_split=2,
+               feature_subset=None,
+               depth=0):
+
+    if feature_subset is None:
+        feature_subset = [i for i in range(0, features.shape[1])]
+
+    def process_node(features, labels, depth):
+
+        if should_stop(labels,
+                       depth,
+                       max_depth,
+                       min_samples_split):
+
+            return {
+                "leaf": True,
+                "prediction": leaf_prediction(labels)
+            }
+
+        best_dict = best_split(
+            features,
+            labels,
+            feature_subset
+        )
+
+        feature_index = best_dict["feature_index"]
+        threshold = best_dict["threshold"]
+
+        lf, ll, rf, rl = split_dataset(
+            features,
+            labels,
+            feature_index,
+            threshold
+        )
+
+        return {
+            "leaf": False,
+            "feature_index": feature_index,
+            "threshold": threshold,
+            "left": process_node(
+                lf,
+                ll,
+                depth + 1
+            ),
+            "right": process_node(
+                rf,
+                rl,
+                depth + 1
+            )
+        }
+
+    return process_node(features, labels, depth)
 
 # Step 8 - predict_example_tree (not yet solved)
 # TODO: implement
